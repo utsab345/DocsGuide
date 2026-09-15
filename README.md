@@ -99,9 +99,17 @@ The repository includes deployment manifests for the two-service setup:
   environment.
 - **Frontend:** import the repository into Vercel with the project root set to
   `frontend`, then set `NEXT_PUBLIC_API_URL` to the deployed backend URL.
+- **Hugging Face:** the Dockerfile also supports a Docker Space and uses the
+  platform-provided `PORT`. Add the API keys as Space Secrets and set
+  `ALLOWED_ORIGINS` to the frontend URL.
 
 The backend loads the embedding and reranker models at startup, so choose a
 host plan with enough memory for the model dependencies.
+
+Hugging Face Static Spaces are free, but they cannot run this Python backend.
+Docker or Gradio Spaces need compute access; free-account availability and
+hardware limits are controlled by Hugging Face. A free static frontend still
+needs a separately hosted API to answer questions.
 
 ## Evaluation data
 
