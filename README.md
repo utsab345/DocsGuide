@@ -90,6 +90,19 @@ The web client is available at <http://localhost:3000>.
 For a deployed frontend, copy `frontend/.env.example` to
 `frontend/.env.local` and set `NEXT_PUBLIC_API_URL` to the public API URL.
 
+## Deployment
+
+The repository includes deployment manifests for the two-service setup:
+
+- **Backend:** deploy the root `Dockerfile` with `render.yaml` on Render. Set
+  `PINECONE_API_KEY`, `GOOGLE_API_KEY`, and `ALLOWED_ORIGINS` in the service
+  environment.
+- **Frontend:** import the repository into Vercel with the project root set to
+  `frontend`, then set `NEXT_PUBLIC_API_URL` to the deployed backend URL.
+
+The backend loads the embedding and reranker models at startup, so choose a
+host plan with enough memory for the model dependencies.
+
 ## Evaluation data
 
 - 28 QA pairs for evaluation
