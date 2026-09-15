@@ -167,7 +167,7 @@ These results use a small manually labeled benchmark and should be treated as an
 
 ## Attribution
 
-This repository is a structured copy of the original [HelpingHands repository](https://github.com/Dipin-Adhikari/HelpingHands) by the FuseAI Fellowship team. It preserves the original application and data while adding a cleaner project README, deployment manifests, CI, environment templates, and security-focused configuration defaults. See `docs/` for the proposal, literature review, system design, and defense materials.
+This repository is based on the DocsGuide project by the FuseAI Fellowship team. It preserves the original application and data while adding a cleaner project README, deployment manifests, CI, environment templates, and security-focused configuration defaults. See `docs/` for the proposal, literature review, system design, and defense materials.
 
 The source repository does not include a license file. Confirm the original
 team's licensing terms before redistributing or deploying this copy.
