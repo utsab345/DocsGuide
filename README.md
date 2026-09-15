@@ -23,10 +23,6 @@ User → Next.js frontend → FastAPI API
                           └─ Gemini response generation
 ```
 
-### System design
-
-![DocsGuide system design](docs/system_design.png)
-
 ## Repository layout
 
 ```text
@@ -92,13 +88,10 @@ The web client is available at <http://localhost:3000>.
 For a deployed frontend, copy `frontend/.env.example` to
 `frontend/.env.local` and set `NEXT_PUBLIC_API_URL` to the public API URL.
 
-## Demo and screenshots
+## Demo
 
 Run the frontend and backend locally using the Quickstart commands above, then
-open <http://localhost:3000>. The system design below shows the full request
-path from the web client through retrieval and generation:
-
-![DocsGuide system design](docs/system_design.png)
+open <http://localhost:3000>.
 
 ## Deployment
 
