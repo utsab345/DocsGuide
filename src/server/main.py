@@ -1,7 +1,8 @@
 import os
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 from dotenv import load_dotenv
 from pinecone import Pinecone
@@ -13,6 +14,8 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from retriever.retriever import initialize_reranker
 from generator.generator import rag_chat, clear_chat_history
+
+logger = logging.getLogger(__name__)
 
 # ============================================
 # STARTUP: Load all models once at server start
@@ -32,7 +35,7 @@ if torch.cuda.is_available():
 
 # 1. Connect to Pinecone
 print("📌 Connecting to Pinecone...")
-INDEX_NAME = "nepali-docs-hybrid"
+INDEX_NAME = os.getenv("PINECONE_INDEX_NAME", "nepali-docs-hybrid")
 pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(INDEX_NAME)
 print(f"✅ Connected to Pinecone index: {INDEX_NAME}")
@@ -70,9 +73,17 @@ print("✅ All models loaded successfully!")
 
 app = FastAPI(title="DocsGuide Conversational API", version="1.1")
 
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
+    ).split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -80,7 +91,7 @@ app.add_middleware(
 
 # Request & Response Models
 class ChatRequest(BaseModel):
-    message: str
+    message: str = Field(min_length=1, max_length=2000)
 
 class SourceInfo(BaseModel):
     source_link: str
@@ -118,7 +129,7 @@ def chat(req: ChatRequest):
         }
 
     except Exception as e:
-        print("Error:", e)
+        logger.exception("Chat request failed")
         return {"reply": "माफ गर्नुहोस्, केही समस्या आयो।", "sources": []}
 
 @app.post("/clear-history")
@@ -127,7 +138,7 @@ def clear_history():
         clear_chat_history()
         return {"message": "Chat history cleared successfully!"}
     except Exception as e:
-        print("❌ Error clearing history:", e)
+        logger.exception("Failed to clear chat history")
         return {"message": "⚠️ Error clearing history."}
 
 @app.get("/health")
