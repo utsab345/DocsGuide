@@ -26,6 +26,7 @@ User → Next.js frontend → FastAPI API
 ```text
 .
 ├── frontend/                 # Next.js and Tailwind web client
+├── data/                     # Processed document chunks and QA fixtures
 ├── src/
 │   ├── server/               # FastAPI application
 │   ├── retriever/            # Hybrid retrieval and reranking
@@ -66,7 +67,7 @@ GOOGLE_API_KEY=your_gemini_key
 Run the API from the repository root:
 
 ```bash
-uvicorn src.server.main:app --reload
+./scripts/run_backend.sh
 ```
 
 The API is available at <http://localhost:8000/docs>.
