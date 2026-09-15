@@ -82,9 +82,23 @@ npm run dev
 
 The web client is available at <http://localhost:3000>.
 
-## Evaluation
+## Evaluation data
 
-The repository includes notebooks and response fixtures for 43 citizenship and passport questions. The reported hybrid-search configuration achieved 85.77%/89.3% answer correctness and 90.23%/88.9% Recall@7 on the evaluation/test splits. These results use a small manually labeled benchmark and should be treated as an initial project baseline.
+- 28 QA pairs for evaluation
+- 15 QA pairs for testing
+- Manually labeled chunks used as ground truth
+- 43 real-world citizenship and passport queries in total
+
+## Performance
+
+Our best hybrid-search configuration uses a 50/50 dense/sparse split, document-type filtering, and reranking:
+
+| Metric | Evaluation | Test |
+| --- | ---: | ---: |
+| Answer correctness | 85.77% | 89.30% |
+| Recall@7 | 90.23% | 88.90% |
+
+These results use a small manually labeled benchmark and should be treated as an initial project baseline.
 
 ## Configuration and security
 
@@ -95,3 +109,7 @@ The repository includes notebooks and response fixtures for 43 citizenship and p
 ## Attribution
 
 This repository is a structured copy of the original DocsGuide project by the FuseAI Fellowship team. See the project documentation in `docs/` for the proposal, literature review, system design, and defense materials.
+
+## Team
+
+Built by **Andis Paudel**, **Bikash Pokhrel**, **Dipin Adhikari**, and **Utsab Dahal**.
