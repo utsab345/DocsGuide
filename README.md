@@ -61,11 +61,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Create `src/.env`:
+Copy `src/.env.example` to `src/.env` and fill in your credentials:
 
 ```env
 PINECONE_API_KEY=your_pinecone_key
 GOOGLE_API_KEY=your_gemini_key
+ALLOWED_ORIGINS=http://localhost:3000
 ```
 
 Run the API from the repository root:
@@ -85,6 +86,9 @@ npm run dev
 ```
 
 The web client is available at <http://localhost:3000>.
+
+For a deployed frontend, copy `frontend/.env.example` to
+`frontend/.env.local` and set `NEXT_PUBLIC_API_URL` to the public API URL.
 
 ## Evaluation data
 
