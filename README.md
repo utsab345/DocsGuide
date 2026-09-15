@@ -21,6 +21,10 @@ User → Next.js frontend → FastAPI API
                           └─ Gemini response generation
 ```
 
+### System design
+
+![DocsGuide system design](docs/system_design.png)
+
 ## Repository layout
 
 ```text
