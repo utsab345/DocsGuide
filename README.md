@@ -1,5 +1,7 @@
 # DocsGuide
 
+[![CI](https://github.com/utsab345/DocsGuide/actions/workflows/ci.yml/badge.svg)](https://github.com/utsab345/DocsGuide/actions/workflows/ci.yml)
+
 **DocsGuide** is a bilingual AI assistant that helps people navigate Nepali government document procedures. It uses retrieval-augmented generation (RAG) to provide step-by-step answers grounded in verified official documents, with source citations.
 
 ## Features
@@ -90,6 +92,14 @@ The web client is available at <http://localhost:3000>.
 For a deployed frontend, copy `frontend/.env.example` to
 `frontend/.env.local` and set `NEXT_PUBLIC_API_URL` to the public API URL.
 
+## Demo and screenshots
+
+Run the frontend and backend locally using the Quickstart commands above, then
+open <http://localhost:3000>. The system design below shows the full request
+path from the web client through retrieval and generation:
+
+![DocsGuide system design](docs/system_design.png)
+
 ## Deployment
 
 The repository includes deployment manifests for the two-service setup:
@@ -118,6 +128,11 @@ needs a separately hosted API to answer questions.
 - Manually labeled chunks used as ground truth
 - 43 real-world citizenship and passport queries in total
 
+The fixtures are in `data/qa/citizenship_qa.json`, `data/qa/passport_qa.json`,
+and `data/qa/test_mixed_qa.json`. The evaluation notebooks are
+`src/qa_test.ipynb`, `src/rag_pipeline_test.ipynb`, and
+`src/rag_pipeline.ipynb`.
+
 ## Performance
 
 Our best hybrid-search configuration uses a 50/50 dense/sparse split, document-type filtering, and reranking:
@@ -133,11 +148,29 @@ These results use a small manually labeled benchmark and should be treated as an
 
 - Never commit `.env` files, API keys, Pinecone credentials, or generated vector databases.
 - Set `NEXT_PUBLIC_API_URL` in `frontend/.env.local` when the API is not running on localhost.
+- If a key is exposed, revoke it in the provider dashboard immediately and replace it in local and deployed secrets.
 - The assistant is informational and does not replace official government guidance. Users should verify requirements with the linked source documents.
+
+## Limitations
+
+- Current coverage focuses on citizenship and passport procedures.
+- Answer quality depends on the completeness and freshness of the ingested official documents.
+- Responses are informational and are not legal advice or a guarantee that an application will be accepted.
+- The benchmark is small and manually labeled, so its scores are an initial baseline rather than a general accuracy guarantee.
+
+## Roadmap
+
+- Expand coverage to PAN, driving license, land records, and additional government services.
+- Add a user-feedback loop for retrieval and answer quality improvements.
+- Add OCR and speech support for scanned forms and mixed-language queries.
+- Publish a hosted demo when the backend credentials and deployment service are configured.
 
 ## Attribution
 
-This repository is a structured copy of the original DocsGuide project by the FuseAI Fellowship team. See the project documentation in `docs/` for the proposal, literature review, system design, and defense materials.
+This repository is a structured copy of the original [HelpingHands repository](https://github.com/Dipin-Adhikari/HelpingHands) by the FuseAI Fellowship team. It preserves the original application and data while adding a cleaner project README, deployment manifests, CI, environment templates, and security-focused configuration defaults. See `docs/` for the proposal, literature review, system design, and defense materials.
+
+The source repository does not include a license file. Confirm the original
+team's licensing terms before redistributing or deploying this copy.
 
 ## Team
 
