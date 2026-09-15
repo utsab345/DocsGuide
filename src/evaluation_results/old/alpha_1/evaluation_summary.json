@@ -1,0 +1,28 @@
+{
+  "config": {
+    "n_retrieval": 5,
+    "n_generation": 3,
+    "alpha": 1
+  },
+  "total_questions": 35,
+  "avg_answer_score": 0.7614285714285713,
+  "avg_precision": 0.25142857142857145,
+  "avg_recall": 0.76,
+  "avg_f1": 0.35886621315192735,
+  "by_document_type": {
+    "citizenship_qa": {
+      "num_questions": 20,
+      "avg_answer_score": 0.7525000000000001,
+      "avg_precision": 0.21000000000000005,
+      "avg_recall": 0.8,
+      "avg_f1": 0.32619047619047614
+    },
+    "passport_qa": {
+      "num_questions": 15,
+      "avg_answer_score": 0.7733333333333333,
+      "avg_precision": 0.3066666666666667,
+      "avg_recall": 0.7066666666666668,
+      "avg_f1": 0.40243386243386237
+    }
+  }
+}

@@ -1,0 +1,96 @@
+# DocsGuide
+
+**DocsGuide** is a bilingual AI assistant that helps people navigate Nepali government document procedures. It uses retrieval-augmented generation (RAG) to provide step-by-step answers grounded in verified official documents, with source citations.
+
+## Features
+
+- Nepali and English conversations
+- Hybrid dense + BM25 retrieval with multilingual reranking
+- Citation-aware answers grounded in retrieved documents
+- FastAPI backend and Next.js frontend
+- Evaluation notebooks for citizenship and passport questions
+
+## Architecture
+
+```text
+User → Next.js frontend → FastAPI API
+                          ├─ Pinecone hybrid retrieval
+                          ├─ Nepali embedding model
+                          ├─ BM25 sparse retrieval
+                          ├─ Multilingual reranker
+                          └─ Gemini response generation
+```
+
+## Repository layout
+
+```text
+.
+├── frontend/                 # Next.js and Tailwind web client
+├── src/
+│   ├── server/               # FastAPI application
+│   ├── retriever/            # Hybrid retrieval and reranking
+│   ├── generator/            # LangGraph response generation
+│   ├── embeddings/           # Embedding utilities and BM25 parameters
+│   ├── preprocessing/        # Document chunking and metadata mapping
+│   └── *.ipynb               # End-to-end experiments and evaluations
+├── docs/                     # Design documents, proposal, and presentation assets
+├── scripts/                  # Local automation entrypoints
+└── .github/workflows/        # Continuous integration
+```
+
+## Quickstart
+
+### Requirements
+
+- Python 3.10+
+- Node.js 18+
+- Pinecone account and index
+- Google Gemini API key
+
+### Backend
+
+```bash
+cd src
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Create `src/.env`:
+
+```env
+PINECONE_API_KEY=your_pinecone_key
+GOOGLE_API_KEY=your_gemini_key
+```
+
+Run the API from the repository root:
+
+```bash
+uvicorn src.server.main:app --reload
+```
+
+The API is available at <http://localhost:8000/docs>.
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The web client is available at <http://localhost:3000>.
+
+## Evaluation
+
+The repository includes notebooks and response fixtures for 43 citizenship and passport questions. The reported hybrid-search configuration achieved 85.77%/89.3% answer correctness and 90.23%/88.9% Recall@7 on the evaluation/test splits. These results use a small manually labeled benchmark and should be treated as an initial project baseline.
+
+## Configuration and security
+
+- Never commit `.env` files, API keys, Pinecone credentials, or generated vector databases.
+- Set `NEXT_PUBLIC_API_URL` in `frontend/.env.local` when the API is not running on localhost.
+- The assistant is informational and does not replace official government guidance. Users should verify requirements with the linked source documents.
+
+## Attribution
+
+This repository is a structured copy of the original DocsGuide project by the FuseAI Fellowship team. See the project documentation in `docs/` for the proposal, literature review, system design, and defense materials.

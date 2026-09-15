@@ -1,0 +1,6 @@
+projenv
+myvenv
+__pycache__
+.env
+src/vectordb
+src/preprocessing/.ipynb_checkpoints
